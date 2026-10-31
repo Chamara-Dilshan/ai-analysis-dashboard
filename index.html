@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trading Dashboard</title>
+<style>
+:root {
+  color-scheme: light;
+  --surface: #fcfcfb; --card: #ffffff; --border: #e4e3df;
+  --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #7a7974;
+  --series-1: #2a78d6; --series-2: #eb6834;
+  --cone: rgba(82, 81, 78, 0.12); --grid: #ecebe7; --limit: #a3a29c;
+  --pos: #1d7a3a; --neg: #b3312f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --surface: #1a1a19; --card: #222220; --border: #34332f;
+    --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #8f8e86;
+    --series-1: #3987e5; --series-2: #d95926;
+    --cone: rgba(195, 194, 183, 0.14); --grid: #2c2b28; --limit: #6f6e67;
+    --pos: #5cc27c; --neg: #e66767;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--surface); color: var(--text-primary);
+  font: 15px/1.45 -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 20px 16px 40px; }
+h1 { font-size: 22px; margin: 0 0 2px; }
+h2 { font-size: 16px; margin: 0 0 4px; }
+.sub, .note { color: var(--text-secondary); font-size: 13px; margin: 0; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px; margin: 18px 0; }
+.tile, .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+.tile .k { color: var(--text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+.tile .v { font-size: 24px; font-weight: 650; font-variant-numeric: tabular-nums; }
+.tile .d { color: var(--text-secondary); font-size: 12px; }
+.meter { height: 6px; background: var(--grid); border-radius: 3px; margin-top: 6px; position: relative; }
+.meter span { display: block; height: 100%; background: var(--text-secondary); border-radius: 3px; }
+.meter i { position: absolute; top: -3px; width: 2px; height: 12px; background: var(--limit); }
+.card { margin-bottom: 14px; position: relative; }
+svg { width: 100%; height: auto; display: block; margin-top: 8px; overflow: visible; }
+.grid { stroke: var(--grid); stroke-width: 1; }
+.zero { stroke: var(--limit); stroke-width: 1; }
+.limit { stroke: var(--limit); stroke-width: 1.5; stroke-dasharray: 5 4; }
+.tick, .cone-label { fill: var(--text-muted); font-size: 11px; }
+svg { max-width: 560px; }
+.direct { fill: var(--text-secondary); font-size: 11.5px; font-weight: 600; }
+.cone { fill: var(--cone); stroke: none; }
+.median { fill: none; stroke: var(--limit); stroke-width: 1; stroke-dasharray: 2 3; }
+.line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.line.paper { stroke: var(--series-1); } .line.real { stroke: var(--series-2); }
+.dot { stroke: var(--card); stroke-width: 2; }
+.dot.paper { fill: var(--series-1); } .dot.real { fill: var(--series-2); }
+.dd-area { fill: var(--series-1); opacity: .14; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--text-secondary); margin-top: 6px; }
+.legend b { display: inline-block; width: 14px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 5px; }
+.cross { stroke: var(--text-muted); stroke-width: 1; visibility: hidden; }
+.tip { position: absolute; pointer-events: none; background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 9px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  white-space: nowrap; display: none; font-variant-numeric: tabular-nums; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+th, td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--border); }
+th { color: var(--text-secondary); font-weight: 600; font-size: 12px; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+.scroll { overflow-x: auto; }
+</style></head>
+<body><main>
+<h1>Crypto setup monitor: live record</h1>
+<p class="sub">Generated 2026-10-31 06:45 UTC · 8c157a3 Link the live public dashboard from the README</p>
+<p class="note" style="margin-top:10px">The live forward record of an automated crypto futures setup monitor: every setup it has fired since August 2026, scored as paper trades (fees included) against the range its backtests predicted for that many trades. Rebuilt daily by the monitor itself. <a href="https://github.com/Chamara-Dilshan/ai-analysis">Source and case study</a>.</p>
+<div class="tiles">
+  <div class="tile"><div class="k">System (paper)</div><div class="v">-8.0R</div>
+    <div class="d">19 trades · 26% wins</div></div>
+  
+  <div class="tile"><div class="k">Drawdown</div><div class="v">$35.38</div>
+    <div class="meter"><span style="width:35%"></span><i style="left:60%"></i><i style="left:calc(100% - 2px)"></i></div>
+    <div class="d">review at $60 · stop at $100</div></div>
+</div>
+
+<div class="card"><h2>Scorecard verdict</h2>
+  <p class="note">on track - inside the range the backtests produced. Normal range for this many trades: -9.8R to +15.0R.</p></div>
+
+<div class="card" id="eq"><h2>Cumulative R per trade</h2>
+  <p class="note">Shaded: the range 90% of backtest stretches of the same length landed in.</p>
+  <svg viewBox="0 0 400 230" role="img" aria-label="Cumulative R, paper and real, against the backtest range"><line class="grid" x1="40" x2="326" y1="192.4" y2="192.4"/><text class="tick" x="34" y="196.4" text-anchor="end">-10R</text><line class="zero" x1="40" x2="326" y1="125.7" y2="125.7"/><text class="tick" x="34" y="129.7" text-anchor="end">0R</text><line class="grid" x1="40" x2="326" y1="58.9" y2="58.9"/><text class="tick" x="34" y="62.9" text-anchor="end">10R</text><text class="tick" x="40" y="222">trade 0</text><text class="tick" x="326" y="222" text-anchor="end">trade 19</text><path class="cone" d="M40.0,125.7 L55.1,107.6 L70.1,95.3 L85.2,84.9 L100.2,77.2 L115.3,69.9 L130.3,66.6 L145.4,62.1 L160.4,56.6 L175.5,49.5 L190.5,48.7 L205.6,43.3 L220.6,42.3 L235.7,36.6 L250.7,34.1 L265.8,30.0 L280.8,25.4 L295.9,28.6 L310.9,25.3 L326.0,25.2 L326.0,190.8 L310.9,189.1 L295.9,189.5 L280.8,185.8 L265.8,184.1 L250.7,179.6 L235.7,177.9 L220.6,176.6 L205.6,174.2 L190.5,170.9 L175.5,169.3 L160.4,167.7 L145.4,165.1 L130.3,161.0 L115.3,158.0 L100.2,153.6 L85.2,146.8 L70.1,139.9 L55.1,132.9 Z"/><path class="median" d="M40.0,125.7 L55.1,130.7 L70.1,126.6 L85.2,126.9 L100.2,127.2 L115.3,126.8 L130.3,125.5 L145.4,125.4 L160.4,124.0 L175.5,122.7 L190.5,121.3 L205.6,121.2 L220.6,120.2 L235.7,118.6 L250.7,117.3 L265.8,117.4 L280.8,116.9 L295.9,117.3 L310.9,116.2 L326.0,115.0"/><text class="cone-label" x="332.0" y="29.2">95%</text><text class="cone-label" x="332.0" y="194.8">5%</text><path class="line paper" d="M40.0,125.7 L55.1,132.9 L70.1,120.3 L85.2,124.1 L100.2,131.4 L115.3,138.6 L130.3,145.7 L145.4,153.0 L160.4,145.5 L175.5,142.2 L190.5,149.3 L205.6,156.3 L220.6,163.6 L235.7,170.5 L250.7,157.4 L265.8,164.3 L280.8,158.0 L295.9,165.1 L310.9,172.1 L326.0,179.3"/><circle class="dot paper" cx="326.0" cy="179.3" r="4"/><text class="direct" x="334.0" y="183.3">Paper -8.0R</text>
+    <line class="cross" y1="14" y2="230" x1="-10" x2="-10"/></svg>
+  <div class="legend"><span><b style="background:var(--series-1)"></b>Paper (every alert)</span>
+    
+    <span><b style="background:var(--cone);height:8px"></b>Backtest 5–95%</span></div>
+  <div class="tip"></div></div>
+
+<div class="card" id="dd"><h2>Drawdown from the high</h2>
+  <p class="note">Paper record, in dollars on $200.</p>
+  <svg viewBox="0 0 400 230" role="img" aria-label="Paper drawdown in dollars with review and stop lines"><line class="grid" x1="40" x2="326" y1="182.9" y2="182.9"/><text class="tick" x="34" y="186.9" text-anchor="end">-$100</text><line class="grid" x1="40" x2="326" y1="143.5" y2="143.5"/><text class="tick" x="34" y="147.5" text-anchor="end">-$75</text><line class="grid" x1="40" x2="326" y1="104.1" y2="104.1"/><text class="tick" x="34" y="108.1" text-anchor="end">-$50</text><line class="grid" x1="40" x2="326" y1="64.7" y2="64.7"/><text class="tick" x="34" y="68.7" text-anchor="end">-$25</text><line class="zero" x1="40" x2="326" y1="25.2" y2="25.2"/><text class="tick" x="34" y="29.2" text-anchor="end">$0</text><text class="tick" x="40" y="222">trade 0</text><text class="tick" x="326" y="222" text-anchor="end">trade 19</text><line class="limit" x1="40" x2="326" y1="119.8" y2="119.8"/><text class="direct" x="332" y="123.8">review $60</text><line class="limit" x1="40" x2="326" y1="182.9" y2="182.9"/><text class="direct" x="332" y="186.9">stop $100</text><path class="dd-area" d="M40.0,25.2 L55.1,32.1 L70.1,25.2 L85.2,28.9 L100.2,35.8 L115.3,42.6 L130.3,49.3 L145.4,56.2 L160.4,49.1 L175.5,46.0 L190.5,52.6 L205.6,59.3 L220.6,66.2 L235.7,72.7 L250.7,60.3 L265.8,66.9 L280.8,60.9 L295.9,67.6 L310.9,74.2 L326.0,81.0 L326.0,25.2 Z"/><path class="line paper" d="M40.0,25.2 L55.1,32.1 L70.1,25.2 L85.2,28.9 L100.2,35.8 L115.3,42.6 L130.3,49.3 L145.4,56.2 L160.4,49.1 L175.5,46.0 L190.5,52.6 L205.6,59.3 L220.6,66.2 L235.7,72.7 L250.7,60.3 L265.8,66.9 L280.8,60.9 L295.9,67.6 L310.9,74.2 L326.0,81.0"/>
+    <line class="cross" y1="14" y2="230" x1="-10" x2="-10"/></svg>
+  <div class="tip"></div></div>
+
+<div class="card"><h2>By setup</h2><div class="scroll"><table>
+  <tr><th>Gate</th><th class="num">Trades</th><th class="num">Wins</th><th class="num">Total</th><th class="num">Per trade</th></tr>
+  <tr><td>reversal</td><td class='num'>8</td><td class='num'>25%</td><td class='num'>-2.5R</td><td class='num'>-0.31R</td></tr><tr><td>continuation</td><td class='num'>11</td><td class='num'>27%</td><td class='num'>-5.5R</td><td class='num'>-0.50R</td></tr></table></div></div>
+
+<div class="card"><h2>Latest trades</h2><div class="scroll"><table>
+  <tr><th>Closed</th><th>Record</th><th>Coin</th><th>Gate</th><th>Side</th><th class="num">Result</th><th></th></tr>
+  <tr><td>2026-10-29</td><td>Paper</td><td>BNB</td><td>continuation</td><td>long</td><td class='num neg'>-1.08R</td><td></td></tr><tr><td>2026-10-21</td><td>Paper</td><td>BTC</td><td>reversal</td><td>short</td><td class='num neg'>-1.05R</td><td></td></tr><tr><td>2026-10-18</td><td>Paper</td><td>ETH</td><td>continuation</td><td>short</td><td class='num neg'>-1.06R</td><td></td></tr><tr><td>2026-10-16</td><td>Paper</td><td>BTC</td><td>continuation</td><td>short</td><td class='num pos'>+0.95R</td><td></td></tr><tr><td>2026-10-15</td><td>Paper</td><td>ETH</td><td>continuation</td><td>short</td><td class='num neg'>-1.04R</td><td></td></tr><tr><td>2026-10-08</td><td>Paper</td><td>ETH</td><td>reversal</td><td>short</td><td class='num pos'>+1.97R</td><td></td></tr><tr><td>2026-10-08</td><td>Paper</td><td>BNB</td><td>reversal</td><td>long</td><td class='num neg'>-1.03R</td><td></td></tr><tr><td>2026-10-07</td><td>Paper</td><td>BNB</td><td>reversal</td><td>long</td><td class='num neg'>-1.10R</td><td></td></tr><tr><td>2026-09-30</td><td>Paper</td><td>ETH</td><td>reversal</td><td>long</td><td class='num neg'>-1.05R</td><td></td></tr><tr><td>2026-09-26</td><td>Paper</td><td>ETH</td><td>reversal</td><td>long</td><td class='num neg'>-1.05R</td><td></td></tr><tr><td>2026-09-23</td><td>Paper</td><td>BTC</td><td>continuation</td><td>long</td><td class='num pos'>+0.49R</td><td></td></tr><tr><td>2026-09-23</td><td>Paper</td><td>ETH</td><td>continuation</td><td>long</td><td class='num pos'>+1.12R</td><td></td></tr><tr><td>2026-09-21</td><td>Paper</td><td>BNB</td><td>continuation</td><td>long</td><td class='num neg'>-1.08R</td><td></td></tr><tr><td>2026-09-21</td><td>Paper</td><td>ETH</td><td>continuation</td><td>long</td><td class='num neg'>-1.07R</td><td></td></tr><tr><td>2026-09-19</td><td>Paper</td><td>ETH</td><td>continuation</td><td>long</td><td class='num neg'>-1.09R</td><td></td></tr></table></div></div>
+<p class="note" style="margin-top:18px">Not financial advice. This is a research and engineering project; it places no orders and recommends no trades. Paper results assume fills at the alert price with fees and no slippage. <a href="https://github.com/Chamara-Dilshan/ai-analysis">github.com/Chamara-Dilshan/ai-analysis</a></p>
+</main>
+<script>
+const D = {"eq": {"x": [55.05263157894737, 70.10526315789474, 85.15789473684211, 100.21052631578948, 115.26315789473684, 130.31578947368422, 145.36842105263156, 160.42105263157896, 175.47368421052633, 190.52631578947367, 205.57894736842104, 220.6315789473684, 235.68421052631578, 250.73684210526315, 265.7894736842105, 280.8421052631579, 295.89473684210526, 310.94736842105266, 326.0], "paper": [-1.089, 0.812, 0.232, -0.86, -1.941, -3.007, -4.091, -2.973, -2.482, -3.533, -4.583, -5.683, -6.718, -4.752, -5.791, -4.845, -5.903, -6.952, -8.033], "real": [], "lo": [-1.0849999999999997, -2.135000000000002, -3.171000000000001, -4.1869999999999985, -4.836000000000002, -5.289, -5.900000000000001, -6.290999999999989, -6.532999999999996, -6.773999999999997, -7.271000000000017, -7.632000000000001, -7.82, -8.083999999999993, -8.756, -9.015000000000006, -9.567000000000007, -9.508000000000003, -9.751000000000007], "hi": [2.711000000000003, 4.550999999999998, 6.111999999999996, 7.265999999999994, 8.355999999999996, 8.852999999999994, 9.530000000000001, 10.345000000000006, 11.407000000000004, 11.526999999999994, 12.340999999999994, 12.490999999999998, 13.346999999999996, 13.721000000000004, 14.327999999999996, 15.027999999999999, 14.545999999999989, 15.041000000000011, 15.047000000000004]}, "dd": {"x": [55.05263157894737, 70.10526315789474, 85.15789473684211, 100.21052631578948, 115.26315789473684, 130.31578947368422, 145.36842105263156, 160.42105263157896, 175.47368421052633, 190.52631578947367, 205.57894736842104, 220.6315789473684, 235.68421052631578, 250.73684210526315, 265.7894736842105, 280.8421052631579, 295.89473684210526, 310.94736842105266, 326.0], "dd": [-4.36, 0.0, -2.32, -6.69, -11.01, -15.27, -19.61, -15.14, -13.18, -17.38, -21.58, -25.98, -30.12, -22.26, -26.41, -22.63, -26.86, -31.06, -35.38]}};
+function hook(id, rows) {
+  const card = document.getElementById(id), svg = card.querySelector("svg"),
+        tip = card.querySelector(".tip"), cross = svg.querySelector(".cross"), xs = D[id].x;
+  if (!xs.length) return;
+  function show(ev) {
+    const r = svg.getBoundingClientRect(), k = 400 / r.width;
+    const vx = (ev.clientX - r.left) * k;
+    let i = 0;
+    for (let j = 1; j < xs.length; j++) if (Math.abs(xs[j] - vx) < Math.abs(xs[i] - vx)) i = j;
+    cross.setAttribute("x1", xs[i]); cross.setAttribute("x2", xs[i]); cross.style.visibility = "visible";
+    tip.innerHTML = "<b>Trade " + (i + 1) + "</b><br>" + rows(i).join("<br>");
+    tip.style.display = "block";
+    const left = xs[i] / k + svg.offsetLeft + 12;
+    tip.style.left = Math.min(left, card.clientWidth - tip.offsetWidth - 8) + "px";
+    tip.style.top = (svg.offsetTop + 8) + "px";
+  }
+  svg.addEventListener("pointermove", show);
+  svg.addEventListener("pointerdown", show);
+  svg.addEventListener("pointerleave", () => { tip.style.display = "none"; cross.style.visibility = "hidden"; });
+}
+const f = v => (v >= 0 ? "+" : "") + v.toFixed(2);
+hook("eq", i => [
+  D.eq.paper[i] !== undefined ? "Paper " + f(D.eq.paper[i]) + "R" : null,
+  D.eq.real[i] !== undefined ? "Real " + f(D.eq.real[i]) + "R" : null,
+  D.eq.lo[i] !== undefined ? "Range " + f(D.eq.lo[i]) + " to " + f(D.eq.hi[i]) + "R" : null
+].filter(Boolean));
+hook("dd", i => ["Drawdown $" + (-D.dd.dd[i]).toFixed(2)]);
+</script>
+</body></html>
